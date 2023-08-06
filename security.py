@@ -84,6 +84,7 @@ def get_token_auth_header() -> str:
     """Obtains the access token from the Authorization Header
     """
     auth = request.headers.get("Authorization", None)
+    
     if not auth:
         raise AuthError({"code": "authorization_header_missing",
                          "description":
@@ -122,3 +123,10 @@ def requires_scope(required_scope: str) -> bool:
             if token_scope == required_scope:
                 return True
     return False
+
+def get_user_permissions():
+    token = get_token_auth_header()
+    unverified_claims = jwt.get_unverified_claims(token)
+    permissions = unverified_claims["permissions"]
+    
+    return permissions

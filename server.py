@@ -9,6 +9,7 @@ from server_config import Config
 from security import (
     requires_auth,
     requires_scope,
+    get_user_permissions,
     AuthError
 )
 
@@ -42,20 +43,16 @@ def handle_auth_error(ex: AuthError) -> Response:
     response.status_code = ex.status_code
     return response
 
-@app.route("/api/dev/get_instructions")
+@app.route("/api/all/get_permissions", methods=["GET", "OPTIONS"])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @cross_origin(headers=["Access-Control-Allow-Origin", "*"])
 @requires_auth
-def get_instructions():
-    if requires_scope("create:endpoint"):
-        instructions = {
+def get_permissions():
+    print("Getting permissions...")
+    permissions = get_user_permissions()
+    print(permissions)
 
-        }
-        return jsonify(instructions)
-    else: 
-        response = "You are not a developer! Please contact the admins to give you developer permissions"
-        logging.error(response)
-        return jsonify(message=response)
+    return jsonify(message="Successful", permissions=permissions, status=200)
 
 
 @app.route("/api/dev/create_endpoint", methods=["POST", "OPTIONS"])
