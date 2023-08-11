@@ -22,7 +22,7 @@ The Privacy Guardian has the following functions:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/eta-prediction-privacy-guardian-oauth2.git
+   git clone https://github.com/nytron88/eta-prediction-privacy-guardian-oauth2.git
    ```
 
 3. Navigate to project directory:
